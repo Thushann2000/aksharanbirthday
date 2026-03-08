@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Aksharan's 1st Birthday Celebration - Share your wishes and memories">
+    <meta name="theme-color" content="#ec4899">
     <title>🎂 Aksharan's Grand 1st Birthday - Floating Memories 🎂</title>
     
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmAFxxFUN+Z3Jj4ewk5+sY+u59IkQlTr8" crossorigin="anonymous">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Comic+Neue:wght@700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" integrity="sha512-iecdLmaskl7CVJkEZSMUkrQ6usznm2Yy6zloDeZQXpPLMscF3we0u+KeJlmain4zY7g8G32uCWwvWJ8DSt33Jw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Comic+Neue:wght@700&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -16,12 +19,22 @@
             --primary-pink: #ec4899;
             --dark-pink: #be185d;
             --light-purple: #d8b4fe;
+            --text-dark: #2d3748;
+            --text-light: #718096;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.08);
+            --shadow-md: 0 5px 15px rgba(0,0,0,0.12);
+            --shadow-lg: 0 15px 35px rgba(0,0,0,0.15);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: auto;
+            overflow-y: scroll;
         }
 
         body {
@@ -32,6 +45,15 @@
             margin: 0;
             overflow-x: hidden;
             touch-action: manipulation;
+            color: var(--text-dark);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
         }
 
         /* ===== ANIMATIONS ===== */
@@ -57,9 +79,21 @@
             50% { transform: translateY(-50px) rotate(30deg); }
         }
 
+        @keyframes swimLeft {
+            0% { transform: translateX(-100%) scaleX(-1); }
+            50% { transform: translateX(50vw) scaleX(-1) translateY(-30px); }
+            100% { transform: translateX(calc(100vw + 100px)) scaleX(-1); }
+        }
+
+        @keyframes swimRight {
+            0% { transform: translateX(100vw) scaleX(1); }
+            50% { transform: translateX(-50vw) scaleX(1) translateY(-30px); }
+            100% { transform: translateX(calc(-100vw - 100px)) scaleX(1); }
+        }
+
         @keyframes pulse-scale {
             0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.1); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 0.9; }
         }
 
         @keyframes bounce-down {
@@ -87,17 +121,16 @@
             50% { box-shadow: 0 0 30px rgba(236, 72, 153, 0.6), 0 20px 50px rgba(190, 24, 93, 0.3); }
         }
 
-        @keyframes flip-in {
-            0% { transform: rotateY(90deg); opacity: 0; }
-            100% { transform: rotateY(0deg); opacity: 1; }
-        }
-
         @keyframes zoom-in {
             0% { transform: scale(0.5); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
 
-        /* ===== FIREWORKS EXPLOSION ===== */
+        @keyframes soft-blur-in {
+            0% { filter: blur(10px); opacity: 0; }
+            100% { filter: blur(0); opacity: 1; }
+        }
+
         @keyframes fireworks-burst {
             0% {
                 transform: translate(0, 0) scale(1);
@@ -109,6 +142,54 @@
             }
         }
 
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes balloon-float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* ===== SWIMMING BIRTHDAY CHARACTERS ===== */
+        .swimming-character {
+            position: fixed;
+            font-size: clamp(3rem, 8vw, 5rem);
+            pointer-events: none;
+            z-index: 1;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+        }
+
+        .swimmer-left {
+            animation: swimLeft 15s linear infinite;
+            top: clamp(15%, 25vh, 30%);
+        }
+
+        .swimmer-right {
+            animation: swimRight 18s linear infinite;
+            top: clamp(60%, 65vh, 75%);
+        }
+
+        .swimmer-left-2 {
+            animation: swimLeft 20s linear infinite 5s;
+            top: clamp(45%, 50vh, 55%);
+        }
+
+        .swimmer-right-2 {
+            animation: swimRight 17s linear infinite 7s;
+            top: clamp(10%, 15vh, 20%);
+        }
+
+        /* ===== ELEMENTS ===== */
         .fireworks-container {
             position: fixed;
             top: 50%;
@@ -130,32 +211,12 @@
             top: 50%;
         }
 
-        /* ===== CONFETTI ANIMATION ===== */
-        @keyframes confetti-fall {
-            to {
-                transform: translateY(100vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
         .confetti {
             position: fixed;
             width: 10px;
             height: 10px;
             pointer-events: none;
             z-index: 9998;
-        }
-
-        /* ===== BALLOON FLOATING ===== */
-        @keyframes balloon-float {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-100vh) rotate(360deg);
-                opacity: 0;
-            }
         }
 
         .balloon {
@@ -168,13 +229,14 @@
         .bg-element {
             position: fixed;
             z-index: -1;
-            opacity: 0.3;
+            opacity: 0.2;
             animation: floatAnim 8s infinite ease-in-out;
             pointer-events: none;
         }
 
+        /* ===== HEADER ===== */
         .header-section {
-            padding: 40px 15px 30px;
+            padding: clamp(20px, 5vw, 40px) 15px clamp(15px, 3vw, 30px);
             text-align: center;
             position: relative;
             z-index: 10;
@@ -184,50 +246,71 @@
         h1 {
             font-family: 'Comic Neue', cursive;
             color: var(--dark-pink);
-            font-size: clamp(2rem, 8vw, 4.5rem);
+            font-size: clamp(1.75rem, 6vw, 4rem);
             font-weight: 900;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.15);
-            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: clamp(10px, 2vw, 15px);
             animation: pulse-scale 2s ease-in-out infinite;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
         }
 
         .creator-badge {
             display: inline-block;
             animation: zoom-in 0.6s ease-out;
+            background: linear-gradient(135deg, rgba(190, 24, 93, 0.8) 0%, rgba(236, 72, 153, 0.9) 100%);
+            color: white;
+            padding: clamp(8px, 2vw, 10px) clamp(16px, 4vw, 28px);
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: clamp(0.75rem, 1.5vw, 0.95rem);
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
-        /* ===== SLIDESHOW - DYNAMIC CONTAINER ===== */
+        .creator-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* ===== SLIDESHOW ===== */
         .slideshow-container {
             position: relative;
             width: 100%;
             max-width: 600px;
-            margin: 30px auto;
-            padding: 0 15px;
+            margin: clamp(25px, 5vw, 40px) auto;
+            padding: 0 clamp(10px, 3vw, 15px);
             z-index: 10;
         }
 
         .slideshow-wrapper {
             position: relative;
             width: 100%;
-            border-radius: 25px;
+            border-radius: clamp(18px, 4vw, 28px);
             overflow: hidden;
-            background: white;
-            padding: 15px;
-            border: 5px solid white;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: clamp(12px, 3vw, 20px);
+            border: 3px solid rgba(255, 255, 255, 0.8);
             animation: glow-pulse 3s ease-in-out infinite;
-            box-shadow: 0 15px 40px rgba(190, 24, 93, 0.25);
-            min-height: 300px;
+            box-shadow: 0 20px 60px rgba(190, 24, 93, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+            min-height: clamp(260px, 50vw, 420px);
         }
 
         .slideshow-inner {
             position: relative;
             width: 100%;
-            border-radius: 15px;
+            border-radius: clamp(12px, 3vw, 20px);
             overflow: hidden;
-            background: #f5f5f5;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05), 0 10px 30px rgba(0, 0, 0, 0.1);
         }
 
         .slideshow-item {
@@ -242,23 +325,24 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            background: linear-gradient(135deg, rgba(255,255,255,1) 0%, rgba(245,245,245,1) 100%);
         }
 
         .slideshow-item.active {
             display: flex;
             opacity: 1;
-            animation: flip-in 0.6s ease-out;
+            animation: soft-blur-in 0.6s ease-out;
         }
 
         .slideshow-item img {
-            max-width: 100%;
-            max-height: 100%;
+            max-width: 95%;
+            max-height: 95%;
             width: auto;
             height: auto;
             object-fit: contain;
             display: block;
-            background: white;
-            border-radius: 12px;
+            border-radius: clamp(8px, 2vw, 12px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
         }
 
         .slideshow-inner.img-portrait {
@@ -275,20 +359,21 @@
 
         .slide-label {
             position: absolute;
-            bottom: 15px;
+            bottom: clamp(10px, 2vw, 15px);
             left: 50%;
             transform: translateX(-50%);
             background: rgba(255,255,255,0.98);
-            padding: 10px 25px;
+            padding: clamp(8px, 2vw, 12px) clamp(16px, 3vw, 28px);
             border-radius: 50px;
             color: var(--dark-pink);
             font-weight: 700;
-            font-size: clamp(0.8rem, 2.5vw, 1rem);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            font-size: clamp(0.7rem, 2vw, 0.95rem);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
             border: 2px solid var(--baby-pink);
             animation: slide-in-up 0.5s ease-out;
             white-space: nowrap;
             z-index: 10;
+            backdrop-filter: blur(5px);
         }
 
         @keyframes slide-in-up {
@@ -296,39 +381,40 @@
             100% { transform: translateX(-50%) translateY(0); opacity: 1; }
         }
 
-        /* ===== CONTROLS RESPONSIVE ===== */
+        /* ===== CONTROLS ===== */
         .slideshow-controls {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: clamp(12px, 3vw, 25px);
-            margin-top: 20px;
+            gap: clamp(8px, 2vw, 20px);
+            margin-top: clamp(12px, 3vw, 25px);
             flex-wrap: wrap;
-            padding: 0 15px;
+            padding: 0 clamp(8px, 2vw, 15px);
         }
 
         .slide-btn {
-            background: linear-gradient(45deg, #ec4899, #db2777);
+            background: linear-gradient(135deg, #ec4899, #db2777);
             color: white;
             border: none;
             border-radius: 50%;
-            width: clamp(45px, 10vw, 55px);
-            height: clamp(45px, 10vw, 55px);
-            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            width: clamp(40px, 10vw, 56px);
+            height: clamp(40px, 10vw, 56px);
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(236,72,153,0.4);
-            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: flex;
             align-items: center;
             justify-content: center;
             -webkit-tap-highlight-color: transparent;
-            min-width: 45px;
-            min-height: 45px;
+            min-width: 40px;
+            min-height: 40px;
+            font-weight: 600;
         }
 
         .slide-btn:hover {
-            transform: scale(1.15) rotate(10deg);
-            box-shadow: 0 8px 25px rgba(236,72,153,0.6);
+            transform: scale(1.1) rotate(8deg);
+            box-shadow: var(--shadow-lg);
         }
 
         .slide-btn:active {
@@ -345,117 +431,178 @@
 
         .slide-indicator {
             display: flex;
-            gap: clamp(6px, 2vw, 10px);
+            gap: clamp(6px, 1.5vw, 10px);
             justify-content: center;
             flex-wrap: wrap;
-            min-width: 150px;
+            min-width: 100px;
         }
 
         .dot {
-            width: clamp(10px, 2vw, 14px);
-            height: clamp(10px, 2vw, 14px);
+            width: clamp(8px, 2vw, 12px);
+            height: clamp(8px, 2vw, 12px);
             border-radius: 50%;
-            background: rgba(190, 24, 93, 0.3);
+            background: rgba(190, 24, 93, 0.25);
             cursor: pointer;
             transition: all 0.3s ease;
             border: 2px solid transparent;
-            min-width: 10px;
-            min-height: 10px;
+            min-width: 8px;
+            min-height: 8px;
         }
 
         .dot:hover {
-            background: rgba(190, 24, 93, 0.6);
-            transform: scale(1.2);
+            background: rgba(190, 24, 93, 0.5);
+            transform: scale(1.15);
         }
 
         .dot.active {
             background: var(--primary-pink);
             box-shadow: 0 0 15px rgba(236, 72, 153, 0.6);
             animation: pulse-scale 0.6s ease-out;
+            border-color: white;
         }
 
         /* ===== SIGNATURE SECTION ===== */
         .signature-section {
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-radius: 35px;
-            padding: clamp(25px, 5vw, 40px);
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: clamp(18px, 4vw, 32px);
+            padding: clamp(18px, 4vw, 40px);
             max-width: 700px;
             width: 92%;
-            margin: 50px auto 60px;
-            border: 2px solid rgba(255,255,255,0.5);
+            margin: clamp(40px, 6vw, 90px) auto clamp(50px, 8vw, 80px);
+            border: 2px solid rgba(255,255,255,0.8);
             position: relative;
             z-index: 10;
             animation: zoom-in 0.8s ease-out 0.3s backwards;
-            box-shadow: 0 10px 40px rgba(190, 24, 93, 0.1);
+            box-shadow: 0 20px 60px rgba(190, 24, 93, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.8);
         }
 
         .signature-section h3 {
             animation: slide-in-left 0.6s ease-out 0.4s backwards;
+            color: var(--dark-pink);
+            font-weight: 800;
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            margin-bottom: clamp(15px, 3vw, 25px);
+            text-align: center;
         }
 
         #signature-pad {
-            border: 4px solid #fff;
-            border-radius: 20px;
-            background: #fff;
+            border: 3px solid rgba(190, 24, 93, 0.2);
+            border-radius: clamp(12px, 2vw, 18px);
+            background: linear-gradient(135deg, #ffffff 0%, #f9f9f9 100%);
             width: 100%;
-            height: clamp(250px, 50vw, 300px);
+            height: clamp(220px, 40vw, 320px);
             touch-action: none;
-            box-shadow: 0 5px 20px rgba(190, 24, 93, 0.1);
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.05), 0 10px 25px rgba(190, 24, 93, 0.1);
             display: block;
+            cursor: crosshair;
+            transition: all 0.3s ease;
+            margin-bottom: clamp(12px, 2vw, 18px);
+        }
+
+        #signature-pad:focus {
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.08), 0 15px 35px rgba(190, 24, 93, 0.15);
+            border-color: var(--primary-pink);
         }
 
         .form-control {
-            border-radius: 15px;
-            border: 2px solid rgba(190, 24, 93, 0.2);
-            padding: clamp(10px, 2vw, 12px);
-            font-size: clamp(0.9rem, 2vw, 1rem);
+            border-radius: clamp(10px, 2vw, 14px);
+            border: 2px solid rgba(190, 24, 93, 0.15);
+            padding: clamp(10px, 2vw, 14px);
+            font-size: clamp(0.85rem, 1.8vw, 1rem);
             transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--text-dark);
+            margin-bottom: clamp(10px, 2vw, 15px);
+        }
+
+        .form-control::placeholder {
+            color: rgba(45, 55, 72, 0.5);
         }
 
         .form-control:focus {
             border-color: var(--primary-pink);
-            box-shadow: 0 0 20px rgba(236, 72, 153, 0.2);
-            transform: translateY(-2px);
+            box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1), inset 0 1px 2px rgba(0,0,0,0.05);
+            transform: translateY(-1px);
+            background: white;
+        }
+
+        .form-group-label {
+            font-size: clamp(0.75rem, 1.8vw, 0.9rem);
+            color: var(--text-dark);
+            font-weight: 600;
+            margin-bottom: clamp(6px, 1.5vw, 8px);
+            display: block;
         }
 
         .btn-grand {
-            background: linear-gradient(45deg, #ec4899, #db2777);
+            background: linear-gradient(135deg, #ec4899, #db2777);
             color: white;
             border-radius: 50px;
-            padding: clamp(12px, 3vw, 15px) clamp(20px, 5vw, 40px);
+            padding: clamp(11px, 2.5vw, 16px) clamp(20px, 4vw, 40px);
             font-weight: 700;
             border: none;
-            box-shadow: 0 10px 25px rgba(236,72,153,0.4);
+            box-shadow: var(--shadow-md);
             width: 100%;
             -webkit-tap-highlight-color: transparent;
-            font-size: clamp(0.95rem, 2vw, 1.1rem);
-            transition: all 0.3s ease;
+            font-size: clamp(0.9rem, 1.8vw, 1.05rem);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            letter-spacing: 0.3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(6px, 1.5vw, 10px);
         }
 
-        .btn-grand:hover {
+        .btn-grand:hover:not(:disabled) {
             transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(236,72,153,0.6);
+            box-shadow: var(--shadow-lg);
         }
 
-        .btn-grand:active {
+        .btn-grand:active:not(:disabled) {
             transform: translateY(-1px);
+        }
+
+        .btn-grand:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
         }
 
         .btn-outline-danger {
             border-radius: 50px;
-            border: 2px solid #dc3545;
-            color: #dc3545;
+            border: 2px solid #ec4899;
+            color: white;
             font-weight: 700;
-            padding: clamp(10px, 2vw, 12px);
-            transition: all 0.3s ease;
+            padding: clamp(11px, 2.5vw, 16px) clamp(20px, 4vw, 40px);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: linear-gradient(135deg, #f472b6 0%, #ec4899 100%);
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(6px, 1.5vw, 10px);
+            font-size: clamp(0.9rem, 1.8vw, 1.05rem);
+            width: 100%;
+            border: none;
         }
 
         .btn-outline-danger:hover {
-            background: #dc3545;
+            background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
             color: white;
-            transform: scale(1.05);
+            border-color: #db2777;
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-outline-danger:active {
+            transform: translateY(-1px);
+        }
+
+        .d-flex.gap-2 {
+            gap: clamp(8px, 2vw, 12px);
+            display: flex;
+            flex-wrap: wrap;
         }
 
         #celebration-cake {
@@ -463,11 +610,11 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(0);
-            font-size: clamp(6rem, 20vw, 12rem);
+            font-size: clamp(4rem, 15vw, 10rem);
             z-index: 9999;
             pointer-events: none;
             transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
+            filter: drop-shadow(0 15px 30px rgba(0,0,0,0.2));
         }
 
         #celebration-cake.show {
@@ -475,52 +622,254 @@
             animation: rotate-360 1s ease-in-out;
         }
 
-        .footer {
-            padding: clamp(25px, 5vw, 40px);
-            text-align: center;
-            font-size: clamp(0.9rem, 2vw, 1rem);
-            color: var(--dark-pink);
-            position: relative;
-            z-index: 10;
-            animation: bounce-down 1s ease-out 0.5s backwards;
+        /* ===== PAGE SECTIONS ===== */
+        .page-section {
+            display: none;
+            padding: clamp(20px, 4vw, 40px) clamp(12px, 3vw, 30px);
+            max-width: 900px;
+            margin: clamp(15px, 3vw, 20px) auto;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: clamp(16px, 3vw, 20px);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 20px 60px rgba(190, 24, 93, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            animation: zoom-in 0.5s ease-out;
+            border: 2px solid rgba(255, 255, 255, 0.8);
         }
 
-        /* ===== MOBILE OPTIMIZATIONS ===== */
-        @media (max-width: 576px) {
+        .page-section.active {
+            display: block;
+        }
+
+        .page-section h2 {
+            color: var(--dark-pink);
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            font-weight: 800;
+            margin-bottom: clamp(15px, 3vw, 30px);
+            display: flex;
+            align-items: center;
+            gap: clamp(8px, 2vw, 15px);
+        }
+
+        .page-section h3 {
+            color: var(--primary-pink);
+            font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+            font-weight: 700;
+            margin-top: clamp(15px, 2vw, 25px);
+            margin-bottom: clamp(10px, 1.5vw, 15px);
+        }
+
+        .page-section p {
+            color: var(--text-dark);
+            line-height: 1.7;
+            font-size: clamp(0.9rem, 1.8vw, 1rem);
+            margin-bottom: clamp(10px, 1.5vw, 15px);
+        }
+
+        .page-section ul,
+        .page-section ol {
+            margin-left: clamp(15px, 3vw, 25px);
+            margin-bottom: clamp(12px, 2vw, 20px);
+        }
+
+        .page-section ul li,
+        .page-section ol li {
+            margin-bottom: clamp(6px, 1.5vw, 10px);
+            color: var(--text-dark);
+            line-height: 1.6;
+            font-size: clamp(0.9rem, 1.8vw, 1rem);
+        }
+
+        .contact-form-group {
+            margin-bottom: clamp(12px, 2vw, 20px);
+        }
+
+        .contact-form-group label {
+            display: block;
+            margin-bottom: clamp(6px, 1.5vw, 8px);
+            font-weight: 600;
+            color: var(--dark-pink);
+            font-size: clamp(0.85rem, 1.8vw, 0.95rem);
+        }
+
+        .contact-form-group input,
+        .contact-form-group textarea {
+            width: 100%;
+            padding: clamp(10px, 2vw, 12px);
+            border-radius: clamp(10px, 2vw, 12px);
+            border: 2px solid rgba(190, 24, 93, 0.15);
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(0.9rem, 1.8vw, 1rem);
+            transition: all 0.3s ease;
+        }
+
+        .contact-form-group input:focus,
+        .contact-form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-pink);
+            box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1);
+        }
+
+        .contact-form-group textarea {
+            resize: vertical;
+            min-height: clamp(120px, 30vw, 150px);
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--primary-pink), #db2777);
+            color: white;
+            padding: clamp(11px, 2.5vw, 14px) clamp(20px, 4vw, 40px);
+            border: none;
+            border-radius: 50px;
+            font-size: clamp(0.9rem, 1.8vw, 1rem);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
+            width: 100%;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: rgba(45, 55, 72, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 2px solid rgba(236, 72, 153, 0.2);
+            color: #e2e8f0;
+            padding: clamp(25px, 4vw, 60px) clamp(12px, 3vw, 20px);
+            margin-top: auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: clamp(20px, 4vw, 40px);
+            margin-bottom: clamp(20px, 3vw, 40px);
+        }
+
+        .footer-section h4 {
+            color: #fff;
+            font-size: clamp(1rem, 1.8vw, 1.1rem);
+            font-weight: 700;
+            margin-bottom: clamp(12px, 2vw, 20px);
+            display: flex;
+            align-items: center;
+            gap: clamp(6px, 1.5vw, 10px);
+        }
+
+        .footer-section h4 i {
+            color: var(--primary-pink);
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section ul li {
+            margin-bottom: clamp(8px, 1.5vw, 12px);
+        }
+
+        .footer-section ul li a {
+            color: #cbd5e0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: clamp(0.85rem, 1.5vw, 0.95rem);
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--primary-pink);
+            transform: translateX(5px);
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: clamp(10px, 2vw, 15px);
+        }
+
+        .footer-brand-title {
+            font-size: clamp(1.2rem, 2vw, 1.4rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-pink), #db2777);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-brand p {
+            font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+            line-height: 1.6;
+            color: #a0aec0;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: clamp(15px, 2vw, 30px);
+            display: flex;
+            flex-direction: column;
+            gap: clamp(12px, 2vw, 20px);
+        }
+
+        .footer-copyright {
+            text-align: center;
+            font-size: clamp(0.75rem, 1.5vw, 0.85rem);
+            color: #a0aec0;
+            line-height: 1.5;
+        }
+
+        .footer-legal {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: clamp(10px, 2vw, 20px);
+            font-size: clamp(0.8rem, 1.5vw, 0.9rem);
+        }
+
+        .footer-legal a {
+            color: #cbd5e0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-legal a:hover {
+            color: var(--primary-pink);
+        }
+
+        /* ===== RESPONSIVE OPTIMIZATIONS ===== */
+        @media (max-width: 480px) {
             body {
-                padding-bottom: 20px;
+                padding-bottom: 10px;
             }
 
             .header-section {
-                padding: 30px 10px 20px;
+                padding: 20px 10px 12px;
             }
 
             h1 {
-                line-height: 1.2;
-            }
-
-            .slideshow-container {
-                padding: 0 10px;
-                margin: 20px auto;
+                line-height: 1.1;
             }
 
             .slideshow-wrapper {
-                border-radius: 20px;
-                padding: 12px;
-                border: 4px solid white;
-                min-height: 250px;
-            }
-
-            .slideshow-controls {
-                gap: 10px;
-                margin-top: 15px;
+                padding: 10px;
             }
 
             .signature-section {
-                border-radius: 25px;
-                padding: 20px;
-                margin: 40px auto 50px;
                 width: 95%;
+                margin: 30px auto 50px;
             }
 
             .d-flex.gap-2 {
@@ -531,34 +880,30 @@
                 width: 100% !important;
             }
 
-            .slide-label {
-                bottom: 10px;
-                padding: 8px 15px;
-                font-size: 0.8rem;
+            #signature-pad {
+                height: 200px;
+            }
+
+            .page-section {
+                margin: 10px 8px;
+            }
+
+            .contact-form-group textarea {
+                min-height: 100px;
+            }
+
+            .swimming-character {
+                font-size: clamp(2.5rem, 6vw, 4rem);
             }
         }
 
-        /* ===== TABLET OPTIMIZATIONS ===== */
-        @media (min-width: 577px) and (max-width: 992px) {
-            .slideshow-container {
-                max-width: 550px;
-            }
-
-            .slideshow-wrapper {
-                min-height: 350px;
-            }
-
-            .signature-section {
-                padding: 35px;
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr;
             }
         }
 
-        /* ===== DESKTOP OPTIMIZATIONS ===== */
-        @media (min-width: 993px) {
-            .slideshow-wrapper {
-                min-height: 400px;
-            }
-
+        @media (min-width: 769px) {
             .slideshow-wrapper:hover {
                 animation: glow-pulse 2s ease-in-out infinite;
             }
@@ -566,123 +911,441 @@
             .slide-btn:hover {
                 animation: rotate-360 0.5s ease-in-out;
             }
-
-            .signature-section {
-                margin: 80px auto;
-                padding: 40px;
-            }
         }
 
-        /* ===== LANDSCAPE MODE ===== */
         @media (max-height: 600px) and (orientation: landscape) {
             .header-section {
-                padding: 15px 15px 10px;
+                padding: 10px 15px 5px;
             }
 
             h1 {
-                font-size: 1.8rem;
-                margin-bottom: 3px;
+                font-size: 1.4rem;
+                margin-bottom: 2px;
             }
 
             .slideshow-container {
-                margin: 10px auto;
+                margin: 5px auto;
             }
 
             .slideshow-wrapper {
-                padding: 10px;
-                min-height: 280px;
-            }
-
-            .slideshow-controls {
-                margin-top: 12px;
+                min-height: 240px;
+                padding: 8px;
             }
 
             .signature-section {
-                margin: 20px auto;
-                padding: 20px;
+                margin: 10px auto;
+                padding: 12px;
             }
 
             #signature-pad {
-                height: 180px;
+                height: 140px;
+                margin-bottom: 8px;
+            }
+
+            .btn-grand, .btn-outline-danger {
+                padding: 8px 16px;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+
+            .slideshow-controls,
+            .signature-section,
+            .btn-grand,
+            footer {
+                display: none;
             }
         }
     </style>
 </head>
 <body>
 
-<div class="bg-element" style="top:10%; left:5%; font-size: 3rem;">🍼</div>
-<div class="bg-element" style="top:5%; right:8%; font-size: 4rem; animation-delay: 1s;">🎈</div>
-<div class="bg-element" style="bottom:15%; left:10%; font-size: 3.5rem; animation-delay: 2s;">🧸</div>
+<!-- Swimming Birthday Characters -->
+<div class="swimming-character swimmer-left" aria-hidden="true">🎂</div>
+<div class="swimming-character swimmer-right" aria-hidden="true">🍰</div>
+<div class="swimming-character swimmer-left-2" aria-hidden="true">🎉</div>
+<div class="swimming-character swimmer-right-2" aria-hidden="true">🧁</div>
 
-<div class="header-section" data-aos="fade-down">
-    <h1>🎂 Aksharan's Grand Birthday!</h1>
-    <a href="https://org.thushannmassthamizhan.media/" target="_blank" class="creator-badge" style="background: rgba(190, 24, 93, 0.7); color: #fff; padding: 8px 25px; border-radius: 25px; text-decoration: none; font-size: 0.9rem;">
-        Web Designed by Thushann 🌐
-    </a>
-</div>
+<div class="bg-element" style="top:10%; left:5%; font-size: clamp(2rem, 5vw, 3rem);" aria-hidden="true">🍼</div>
+<div class="bg-element" style="top:5%; right:8%; font-size: clamp(2.5rem, 6vw, 4rem); animation-delay: 1s;" aria-hidden="true">🎈</div>
+<div class="bg-element" style="bottom:15%; left:10%; font-size: clamp(2.5rem, 5.5vw, 3.5rem); animation-delay: 2s;" aria-hidden="true">🧸</div>
 
-<!-- Dynamic Slideshow -->
-<div class="slideshow-container" data-aos="fade-up">
-    <div class="slideshow-wrapper">
-        <div class="slideshow-inner img-portrait" id="slideshow-inner">
-            <div class="slideshow-item active" data-label="Our Little Prince 👑" data-ratio="portrait">
-                <img src="baby.jpg" alt="1">
+<main>
+    <!-- HOME PAGE -->
+    <div id="home-page" class="page-section active">
+        <div class="header-section" data-aos="fade-down">
+            <h1>🎂 Aksharan's Grand Birthday!</h1></div>
+
+        <!-- Dynamic Slideshow -->
+        <div class="slideshow-container" data-aos="fade-up">
+            <div class="slideshow-wrapper">
+                <div class="slideshow-inner img-portrait" id="slideshow-inner">
+                    <div class="slideshow-item active" data-label="Our Little Prince 👑" data-ratio="portrait">
+                        <img src="baby.jpg" alt="Our Little Prince - Aksharan's birthday photo">
+                    </div>
+                    <div class="slideshow-item" data-label="Sweetest Smile 😄" data-ratio="portrait">
+                        <img src="baby1.jpg" alt="Sweetest Smile - Baby's happy moment">
+                    </div>
+                    <div class="slideshow-item" data-label="Cute Moments ❤️" data-ratio="landscape">
+                        <img src="baby2.jpg" alt="Cute Moments - Aksharan playing">
+                    </div>
+                    <div class="slideshow-item" data-label="Playful Baby 🎉" data-ratio="square">
+                        <img src="baby3.jpg" alt="Playful Baby - Birthday celebration">
+                    </div>
+                    <div class="slideshow-item" data-label="Sweet Dreams 😴" data-ratio="portrait">
+                        <img src="baby4.jpg" alt="Sweet Dreams - Sleeping peacefully">
+                    </div>
+                    <div class="slideshow-item" data-label="Happy Giggles 😂" data-ratio="landscape">
+                        <img src="baby5.jpg" alt="Happy Giggles - Baby laughing">
+                    </div>
+                    <div class="slideshow-item" data-label="Happy Birthday! 🎂" data-ratio="square">
+                        <img src="baby6.jpg" alt="Happy Birthday - Aksharan's special day">
+                    </div>
+                </div>
+                <div class="slide-label" id="slide-label">Our Little Prince 👑</div>
             </div>
-            <div class="slideshow-item" data-label="Sweetest Smile 😄" data-ratio="portrait">
-                <img src="baby1.jpg" alt="2">
-            </div>
-            <div class="slideshow-item" data-label="Cute Moments ❤️" data-ratio="landscape">
-                <img src="baby2.jpg" alt="3">
-            </div>
-            <div class="slideshow-item" data-label="Playful Baby 🎉" data-ratio="square">
-                <img src="baby3.jpg" alt="4">
-            </div>
-            <div class="slideshow-item" data-label="Sweet Dreams 😴" data-ratio="portrait">
-                <img src="baby4.jpg" alt="5">
-            </div>
-            <div class="slideshow-item" data-label="Happy Giggles 😂" data-ratio="landscape">
-                <img src="baby5.jpg" alt="6">
-            </div>
-            <div class="slideshow-item" data-label="Happy Birthday! 🎂" data-ratio="square">
-                <img src="baby6.jpg" alt="7">
+
+            <!-- Controls -->
+            <div class="slideshow-controls">
+                <button class="slide-btn prev" id="prev-btn" aria-label="Previous photo">❮</button>
+                <div class="slide-indicator" id="dots-container"></div>
+                <button class="slide-btn next" id="next-btn" aria-label="Next photo">❯</button>
             </div>
         </div>
-        <div class="slide-label" id="slide-label">Our Little Prince 👑</div>
+
+        <div class="signature-section" data-aos="fade-up">
+            <h3>உங்கள் வாழ்த்துக்களை இங்கே பகிருங்கள் ❤️🍼</h3>
+            <div>
+                <label for="signer-name" class="form-group-label">உங்கள் பெயர் / Your Name (Optional)</label>
+                <input type="text" id="signer-name" class="form-control" placeholder="Enter your name" maxlength="100" aria-describedby="name-help">
+            </div>
+            <div>
+                <label for="wish" class="form-group-label">குட்டி அக்ஷரனுக்கு ஒரு வாழ்த்துச் செய்தி எழுதுங்கள் / Your Wish (Optional)</label>
+                <textarea id="wish" class="form-control" placeholder="Wish to Aksharan..." rows="2" maxlength="500" aria-describedby="wish-help"></textarea>
+            </div>
+            
+            <div style="text-align: center; margin-bottom: clamp(10px, 2vw, 15px);"><small style="color: var(--text-dark); font-weight: 600; font-size: clamp(0.8rem, 1.5vw, 0.9rem);">🖊️ கீழே கையெழுத்திடுங்கள் / Draw your signature below</small></div>
+            <canvas id="signature-pad" role="img" aria-label="Signature drawing area"></canvas>
+            
+            <div class="d-flex gap-2">
+                <button id="clear" class="btn btn-outline-danger" aria-label="Clear signature">
+                    <i class="fas fa-redo"></i> <span>Clear</span>
+                </button>
+                <button id="save" class="btn btn-grand" aria-label="Save and celebrate">
+                    <i class="fas fa-check-circle"></i> <span>Save & Celebrate! 🎈</span>
+                </button>
+            </div>
+        </div>
     </div>
 
-    <!-- Controls -->
-    <div class="slideshow-controls">
-        <button class="slide-btn prev" id="prev-btn">❮</button>
-        <div class="slide-indicator" id="dots-container"></div>
-        <button class="slide-btn next" id="next-btn">❯</button>
+    <!-- PRIVACY POLICY PAGE -->
+    <div id="privacy-policy" class="page-section">
+        <h2><i class="fas fa-shield-alt"></i> Privacy Policy</h2>
+        
+        <h3>1. Introduction</h3>
+        <p>Welcome to Aksharan's 1st Birthday Celebration website. We are committed to protecting your privacy and ensuring you have a positive experience on our website. This Privacy Policy explains how we collect, use, disclose, and otherwise handle your personal information.</p>
+
+        <h3>2. Information We Collect</h3>
+        <p>We collect information you provide directly, including:</p>
+        <ul>
+            <li><strong>Name:</strong> Optional name provided in the signature section</li>
+            <li><strong>Messages:</strong> Birthday wishes and messages you leave</li>
+            <li><strong>Signatures:</strong> Digital signatures drawn on our platform</li>
+            <li><strong>Technical Information:</strong> IP address, browser type, device information (automatically collected)</li>
+        </ul>
+
+        <h3>3. How We Use Your Information</h3>
+        <p>We use the information we collect for the following purposes:</p>
+        <ul>
+            <li>To display your wishes and signatures on the birthday celebration page</li>
+            <li>To personalize your experience on our website</li>
+            <li>To improve and optimize our website's functionality</li>
+            <li>To respond to your inquiries and communicate with you</li>
+            <li>To comply with legal obligations and prevent fraud</li>
+        </ul>
+
+        <h3>4. Data Security</h3>
+        <p>We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the Internet is 100% secure.</p>
+
+        <h3>5. Third-Party Services</h3>
+        <p>We may use third-party services such as:</p>
+        <ul>
+            <li><strong>Bootstrap (CDN):</strong> For website styling and layout</li>
+            <li><strong>Google Fonts:</strong> For typography</li>
+            <li><strong>Signature Pad Library:</strong> For digital signature functionality</li>
+            <li><strong>Font Awesome:</strong> For icons</li>
+        </ul>
+        <p>These services have their own privacy policies, and we encourage you to review them.</p>
+
+        <h3>6. Cookies</h3>
+        <p>Our website may use cookies to enhance your experience. You can control cookie settings through your browser preferences. Most browsers allow you to refuse cookies or alert you when cookies are being sent.</p>
+
+        <h3>7. Data Retention</h3>
+        <p>We retain your personal information for as long as necessary to fulfill the purposes outlined in this Privacy Policy, unless a longer retention period is required by law.</p>
+
+        <h3>8. Your Rights</h3>
+        <p>Depending on your location, you may have certain rights regarding your personal information, including:</p>
+        <ul>
+            <li>The right to access your personal information</li>
+            <li>The right to correct inaccurate information</li>
+            <li>The right to request deletion of your information</li>
+            <li>The right to opt-out of marketing communications</li>
+        </ul>
+
+        <h3>9. GDPR Compliance (For EU Residents)</h3>
+        <p>If you are located in the European Union, we comply with the General Data Protection Regulation (GDPR). You have the right to:</p>
+        <ul>
+            <li>Request access to your data</li>
+            <li>Request correction or deletion of your data</li>
+            <li>Object to processing of your data</li>
+            <li>Request restriction of processing</li>
+            <li>Request data portability</li>
+        </ul>
+
+        <h3>10. CCPA Compliance (For California Residents)</h3>
+        <p>If you are a California resident, you have specific rights under the California Consumer Privacy Act (CCPA):</p>
+        <ul>
+            <li>The right to know what personal information is collected, used, and shared</li>
+            <li>The right to delete personal information collected</li>
+            <li>The right to opt-out of the sale or sharing of personal information</li>
+            <li>The right to non-discrimination for exercising your privacy rights</li>
+        </ul>
+
+        <h3>11. Changes to This Policy</h3>
+        <p>We may update this Privacy Policy from time to time. We will notify you of any changes by updating the "Last Updated" date at the bottom of this page. Your continued use of the website constitutes your acceptance of the updated Privacy Policy.</p>
+
+        <h3>12. Contact Us</h3>
+        <p>If you have questions about this Privacy Policy or our privacy practices, please <a href="#" onclick="showPage('contact-us'); return false;" style="color: var(--primary-pink); text-decoration: none; font-weight: 600;">contact us</a>.</p>
+
+        <p style="margin-top: clamp(20px, 4vw, 40px); font-size: clamp(0.8rem, 1.5vw, 0.9rem); color: #718096;"><strong>Last Updated:</strong> March 2026</p>
     </div>
-</div>
 
-<div class="signature-section" data-aos="fade-up">
-    <h3 class="text-center mb-4" style="color:var(--dark-pink); font-weight:800;">உங்கள் வாழ்த்துக்களை இங்கே பகிருங்கள் ❤️🍼</h3>
-    <input type="text" id="signer-name" class="form-control mb-3" placeholder="உங்கள் பெயர்/Your Name (Optional)">
-    <textarea id="wish" class="form-control mb-3" placeholder="குட்டி அக்ஷரனுக்கு ஒரு வாழ்த்துச் செய்தி எழுதுங்கள்/Your Wish...(Optional)" rows="2"></textarea>
-    
-    <div class="text-center mb-2"><small>கீழே கையெழுத்திடுங்கள் / Draw below</small></div>
-    <canvas id="signature-pad"></canvas>
-    
-    <div class="mt-4 d-flex gap-2">
-        <button id="clear" class="btn btn-outline-danger rounded-pill" style="flex: 1;">Clear</button>
-        <button id="save" class="btn btn-grand" style="flex: 2;">Save & Celebrate! 🎈</button>
+    <!-- TERMS OF SERVICE PAGE -->
+    <div id="terms-service" class="page-section">
+        <h2><i class="fas fa-file-contract"></i> Terms of Service</h2>
+        
+        <h3>1. Acceptance of Terms</h3>
+        <p>By accessing and using this website, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to abide by the above, please do not use this service.</p>
+
+        <h3>2. Use License</h3>
+        <p>Permission is granted to temporarily download one copy of the materials (information or software) on the website for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:</p>
+        <ul>
+            <li>Modify or copy the materials</li>
+            <li>Use the materials for any commercial purpose or for any public display</li>
+            <li>Attempt to decompile or reverse engineer any software contained on the website</li>
+            <li>Remove any copyright or other proprietary notations from the materials</li>
+            <li>Transfer the materials to another person or "mirror" the materials on any other server</li>
+        </ul>
+
+        <h3>3. Disclaimer</h3>
+        <p>The materials on this website are provided on an 'as is' basis. We make no warranties, expressed or implied, and hereby disclaim and negate all other warranties including, without limitation, implied warranties or conditions of merchantability, fitness for a particular purpose, or non-infringement of intellectual property or other violation of rights.</p>
+
+        <h3>4. Limitations</h3>
+        <p>In no event shall our company or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use the materials on the website, even if we or our authorized representative has been notified orally or in writing of the possibility of such damage.</p>
+
+        <h3>5. Accuracy of Materials</h3>
+        <p>The materials appearing on our website could include technical, typographical, or photographic errors. We do not warrant that any of the materials on our website are accurate, complete, or current. We may make changes to the materials contained on our website at any time without notice.</p>
+
+        <h3>6. Links</h3>
+        <p>We have not reviewed all of the sites linked to our website and are not responsible for the contents of any such linked site. The inclusion of any link does not imply endorsement by us of the site. Use of any such linked website is at the user's own risk.</p>
+
+        <h3>7. Modifications</h3>
+        <p>We may revise these terms of service for our website at any time without notice. By using this website, you are agreeing to be bound by the then current version of these terms of service.</p>
+
+        <h3>8. User Content</h3>
+        <p>Any content you submit, post, or display on this website, including names, messages, and signatures, is considered non-confidential and non-proprietary. By submitting such content, you grant us a worldwide, non-exclusive, royalty-free license to use, reproduce, modify, and distribute such content for the purpose of celebrating this special occasion.</p>
+
+        <h3>9. Prohibited Activities</h3>
+        <p>You agree not to:</p>
+        <ul>
+            <li>Harass, threaten, embarrass, or cause distress or discomfort to any individual</li>
+            <li>Upload obscene or offensive material</li>
+            <li>Disrupt the normal flow of dialogue within our website</li>
+            <li>Attempt to gain unauthorized access to the website</li>
+            <li>Use automated tools to interact with the website</li>
+        </ul>
+
+        <h3>10. Governing Law</h3>
+        <p>These terms and conditions are governed by and construed in accordance with the laws of India, and you irrevocably submit to the exclusive jurisdiction of the courts in that location.</p>
+
+        <p style="margin-top: clamp(20px, 4vw, 40px); font-size: clamp(0.8rem, 1.5vw, 0.9rem); color: #718096;"><strong>Last Updated:</strong> March 2026</p>
     </div>
-</div>
 
-<div id="celebration-cake">🎂🥳</div>
+    <!-- CONTACT US PAGE -->
+    <div id="contact-us" class="page-section">
+        <h2><i class="fas fa-envelope"></i> Contact Us</h2>
+        
+        <p style="margin-bottom: clamp(15px, 3vw, 30px); font-size: clamp(0.9rem, 1.8vw, 1rem);">We'd love to hear from you! If you have any questions, suggestions, or feedback about our website or this special celebration, please don't hesitate to reach out.</p>
 
-<div class="footer">
-    Web Developed with ❤️ by <a href="https://org.thushannmassthamizhan.media/" target="_blank" style="color: #be185d; text-decoration:none; font-weight:700;">Thushann</a>
-</div>
+        <h3>📧 Email Us</h3>
+        <p>
+            <strong>Email Address:</strong> <a href="mailto:thushannjoker@gmail.com" style="color: var(--primary-pink); text-decoration: none;">thushannjoker@gmail.com</a><br>
+            <strong>Response Time:</strong> We typically respond within 24-48 hours
+        </p>
+
+        <h3>🌐 Visit Our Website</h3>
+        <p>
+            <a href="https://org.thushannmassthamizhan.media/" target="_blank" rel="noopener noreferrer" style="color: var(--primary-pink); text-decoration: none; font-weight: 600;">https://org.thushannmassthamizhan.media/</a><br>
+            Explore more of our work and services
+        </p>
+
+        <h3>📞 Phone Support</h3>
+        <p>
+            <strong>Availability:</strong> Monday - Friday, 10:00 AM - 6:00 PM IST<br>
+            <strong>Note:</strong> For urgent matters, please email us first
+        </p>
+
+        <h3>Contact Form</h3>
+        <form id="contact-form" onsubmit="return handleContactSubmit(event)">
+            <div class="contact-form-group">
+                <label for="contact-name">Your Name *</label>
+                <input type="text" id="contact-name" name="name" required>
+            </div>
+
+            <div class="contact-form-group">
+                <label for="contact-email">Your Email *</label>
+                <input type="email" id="contact-email" name="email" required>
+            </div>
+
+            <div class="contact-form-group">
+                <label for="contact-subject">Subject *</label>
+                <input type="text" id="contact-subject" name="subject" required>
+            </div>
+
+            <div class="contact-form-group">
+                <label for="contact-message">Message *</label>
+                <textarea id="contact-message" name="message" required></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit">Send Message 📤</button>
+        </form>
+
+        <h3>FAQ</h3>
+        <div style="background: rgba(236, 72, 153, 0.1); padding: clamp(12px, 2vw, 20px); border-radius: 12px; margin: clamp(12px, 2vw, 20px) 0;">
+            <p style="font-size: clamp(0.9rem, 1.8vw, 1rem);"><strong>Q: How long will the celebration website be active?</strong></p>
+            <p style="font-size: clamp(0.9rem, 1.8vw, 1rem);">A: The website will remain active indefinitely as a memorable record of Aksharan's special day.</p>
+            
+            <p style="margin-top: clamp(10px, 1.5vw, 15px); font-size: clamp(0.9rem, 1.8vw, 1rem);"><strong>Q: Can I modify my signature or wish after submission?</strong></p>
+            <p style="font-size: clamp(0.9rem, 1.8vw, 1rem);">A: Currently, submissions are final. For modifications, please contact us.</p>
+            
+            <p style="margin-top: clamp(10px, 1.5vw, 15px); font-size: clamp(0.9rem, 1.8vw, 1rem);"><strong>Q: Is my personal information shared with third parties?</strong></p>
+            <p style="font-size: clamp(0.9rem, 1.8vw, 1rem);">A: No, we do not share your personal information with third parties except as required by law.</p>
+        </div>
+    </div>
+</main>
+
+<div id="celebration-cake" aria-live="polite" aria-hidden="true">🎂🥳</div>
+
+<!-- PROFESSIONAL FOOTER -->
+<footer>
+    <div class="footer-container">
+        <div class="footer-content">
+            <!-- Brand Section -->
+            <div class="footer-section footer-brand">
+                <div class="footer-brand-title">🎂 Aksharan's Birthday</div>
+                <p>Celebrating the joy and love of our little prince's special day with cherished memories and heartfelt wishes from loved ones.</p>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-section">
+                <h4><i class="fas fa-link"></i> Quick Links</h4>
+                <ul>
+                    <li><a href="#" onclick="showPage('home-page'); return false;"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="#" onclick="showPage('contact-us'); return false;"><i class="fas fa-envelope"></i> Contact Us</a></li>
+                    <li><a href="#" onclick="showPage('privacy-policy'); return false;"><i class="fas fa-shield-alt"></i> Privacy Policy</a></li>
+                    <li><a href="#" onclick="showPage('terms-service'); return false;"><i class="fas fa-file-contract"></i> Terms of Service</a></li>
+                </ul>
+            </div>
+
+            <!-- Support -->
+            <div class="footer-section">
+                <h4><i class="fas fa-headset"></i> Support</h4>
+                <ul>
+                    <li><a href="#" onclick="showPage('contact-us'); return false;"><i class="fas fa-question-circle"></i> FAQ</a></li>
+                    <li><a href="mailto:thushannjoker@gmail.com"><i class="fas fa-envelope"></i> Email Support</a></li>
+                    <li><a href="https://org.thushannmassthamizhan.media/" target="_blank" rel="noopener noreferrer"><i class="fas fa-globe"></i> Our Website</a></li>
+                    <li><a href="#" onclick="showPage('contact-us'); return false;"><i class="fas fa-comments"></i> Send Feedback</a></li>
+                </ul>
+            </div>
+
+            <!-- Developer Info -->
+            <div class="footer-section">
+                <h4><i class="fas fa-code"></i> Developer</h4>
+                <ul>
+                    <li><a href="https://org.thushannmassthamizhan.media/" target="_blank" rel="noopener noreferrer"><i class="fas fa-user"></i> Thushann</a></li>
+                    <li><a href="https://org.thushannmassthamizhan.media/" target="_blank" rel="noopener noreferrer"><i class="fas fa-briefcase"></i> Web Services</a></li>
+                    <li><a href="mailto:thushannjoker@gmail.com"><i class="fas fa-envelope"></i> Get in Touch</a></li>
+                    <li><a href="#" onclick="showPage('contact-us'); return false;"><i class="fas fa-handshake"></i> Partnership</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+            <div class="footer-legal">
+                <a href="#" onclick="showPage('privacy-policy'); return false;">Privacy Policy</a>
+                <span style="color: #4a5568;">|</span>
+                <a href="#" onclick="showPage('terms-service'); return false;">Terms of Service</a>
+                <span style="color: #4a5568;">|</span>
+                <a href="#" onclick="showPage('contact-us'); return false;">Contact Us</a>
+                <span style="color: #4a5568;">|</span>
+                <a href="https://org.thushannmassthamizhan.media/" target="_blank" rel="noopener noreferrer">Website</a>
+            </div>
+            <div class="footer-copyright">
+                <p>&copy; 2026 Aksharan's 1st Birthday Celebration. All rights reserved. | Designed & Developed by <a href="https://org.thushannmassthamizhan.media/" target="_blank" rel="noopener noreferrer" style="color: var(--primary-pink); font-weight: 700;">Thushann</a> with ❤️</p>
+            </div>
+        </div>
+    </div>
+</footer>
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.2.0/dist/signature_pad.umd.min.js"></script>
 
 <script>
     AOS.init({ duration: 1000, once: true, offset: 50 });
+
+    // ===== PAGE NAVIGATION =====
+    function showPage(pageId) {
+        const pages = document.querySelectorAll('.page-section');
+        pages.forEach(page => page.classList.remove('active'));
+        
+        const selectedPage = document.getElementById(pageId);
+        if (selectedPage) {
+            selectedPage.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'auto' });
+        }
+    }
+
+    // ===== CONTACT FORM HANDLER =====
+    function handleContactSubmit(event) {
+        event.preventDefault();
+        
+        const name = document.getElementById('contact-name').value.trim();
+        const email = document.getElementById('contact-email').value.trim();
+        const subject = document.getElementById('contact-subject').value.trim();
+        const message = document.getElementById('contact-message').value.trim();
+        
+        if (!name || !email || !subject || !message) {
+            alert('Please fill out all fields!');
+            return false;
+        }
+        
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            alert('Please enter a valid email address!');
+            return false;
+        }
+        
+        console.log('Contact Form Data:', { name, email, subject, message });
+        
+        alert('Thank you for your message! We will get back to you soon. 💌');
+        document.getElementById('contact-form').reset();
+        return false;
+    }
 
     // ===== SLIDESHOW LOGIC =====
     let currentSlide = 0;
@@ -691,13 +1354,18 @@
     let slideshowInterval;
     const slideshowInner = document.getElementById('slideshow-inner');
 
-    // Create dots for navigation
     const dotsContainer = document.getElementById('dots-container');
     for (let i = 0; i < totalSlides; i++) {
         const dot = document.createElement('div');
         dot.classList.add('dot');
         if (i === 0) dot.classList.add('active');
         dot.addEventListener('click', () => goToSlide(i));
+        dot.setAttribute('aria-label', `Go to photo ${i + 1}`);
+        dot.setAttribute('role', 'button');
+        dot.setAttribute('tabindex', '0');
+        dot.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') goToSlide(i);
+        });
         dotsContainer.appendChild(dot);
     }
     const dots = document.querySelectorAll('.dot');
@@ -763,7 +1431,7 @@
     updateFrameAspectRatio();
     startAutoSlide();
 
-    // ===== CELEBRATION EFFECTS ===== */
+    // ===== CELEBRATION EFFECTS =====
     function createFireworks() {
         const colors = ['#ec4899', '#db2777', '#f9a8d4', '#fecdd3', '#fed7aa'];
         for (let i = 0; i < 30; i++) {
@@ -864,7 +1532,6 @@
         saveBtn.disabled = true;
         saveBtn.innerText = "Saving...";
 
-        // ===== TRIGGER ALL CELEBRATION EFFECTS =====
         triggerShake();
         createFireworks();
         createConfetti();
