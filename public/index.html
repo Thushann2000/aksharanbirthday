@@ -97,6 +97,74 @@
             100% { transform: scale(1); opacity: 1; }
         }
 
+        /* ===== FIREWORKS EXPLOSION ===== */
+        @keyframes fireworks-burst {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(0);
+                opacity: 0;
+            }
+        }
+
+        .fireworks-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 100px;
+            height: 100px;
+            margin-left: -50px;
+            margin-top: -50px;
+            pointer-events: none;
+            z-index: 9998;
+        }
+
+        .firework-particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            left: 50%;
+            top: 50%;
+        }
+
+        /* ===== CONFETTI ANIMATION ===== */
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            pointer-events: none;
+            z-index: 9998;
+        }
+
+        /* ===== BALLOON FLOATING ===== */
+        @keyframes balloon-float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .balloon {
+            position: fixed;
+            font-size: 3rem;
+            pointer-events: none;
+            z-index: 9998;
+        }
+
         .bg-element {
             position: fixed;
             z-index: -1;
@@ -193,7 +261,6 @@
             border-radius: 12px;
         }
 
-        /* Dynamic height adjustment based on image */
         .slideshow-inner.img-portrait {
             aspect-ratio: 3 / 4;
         }
@@ -613,7 +680,6 @@
 
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.2.0/dist/signature_pad.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
 <script>
     AOS.init({ duration: 1000, once: true, offset: 50 });
@@ -640,10 +706,8 @@
         const currentSlideElement = slides[currentSlide];
         const ratio = currentSlideElement.getAttribute('data-ratio');
         
-        // Remove all ratio classes
         slideshowInner.classList.remove('img-portrait', 'img-landscape', 'img-square');
         
-        // Add the appropriate class based on ratio
         if (ratio === 'portrait') {
             slideshowInner.classList.add('img-portrait');
         } else if (ratio === 'landscape') {
@@ -663,7 +727,6 @@
         const label = slides[n].getAttribute('data-label');
         document.getElementById('slide-label').textContent = label;
         
-        // Update frame aspect ratio dynamically
         updateFrameAspectRatio();
     }
 
@@ -697,9 +760,71 @@
     document.getElementById('next-btn').addEventListener('click', nextSlide);
     document.getElementById('prev-btn').addEventListener('click', prevSlide);
 
-    // Initialize first slide with correct aspect ratio
     updateFrameAspectRatio();
     startAutoSlide();
+
+    // ===== CELEBRATION EFFECTS ===== */
+    function createFireworks() {
+        const colors = ['#ec4899', '#db2777', '#f9a8d4', '#fecdd3', '#fed7aa'];
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'firework-particle';
+            particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+            
+            const angle = (i / 30) * Math.PI * 2;
+            const velocity = 5 + Math.random() * 10;
+            const tx = Math.cos(angle) * velocity * 20;
+            const ty = Math.sin(angle) * velocity * 20;
+            
+            particle.style.setProperty('--tx', tx + 'px');
+            particle.style.setProperty('--ty', ty + 'px');
+            particle.style.animation = `fireworks-burst 1s ease-out forwards`;
+            
+            document.body.appendChild(particle);
+            
+            setTimeout(() => particle.remove(), 1000);
+        }
+    }
+
+    function createConfetti() {
+        const colors = ['#ec4899', '#db2777', '#f9a8d4', '#fecdd3', '#fed7aa', '#d8b4fe'];
+        for (let i = 0; i < 50; i++) {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.animation = `confetti-fall ${2 + Math.random() * 1}s linear forwards`;
+            confetti.style.animationDelay = Math.random() * 0.3 + 's';
+            
+            document.body.appendChild(confetti);
+            
+            setTimeout(() => confetti.remove(), 3300);
+        }
+    }
+
+    function createBalloons() {
+        const balloonEmojis = ['🎈', '🎉', '🎊', '🎁'];
+        for (let i = 0; i < 15; i++) {
+            const balloon = document.createElement('div');
+            balloon.className = 'balloon';
+            balloon.textContent = balloonEmojis[Math.floor(Math.random() * balloonEmojis.length)];
+            balloon.style.left = Math.random() * 80 + 10 + 'vw';
+            balloon.style.bottom = '-50px';
+            balloon.style.animation = `balloon-float ${3 + Math.random() * 2}s ease-in forwards`;
+            balloon.style.animationDelay = Math.random() * 0.5 + 's';
+            
+            document.body.appendChild(balloon);
+            
+            setTimeout(() => balloon.remove(), 5500);
+        }
+    }
+
+    function triggerShake() {
+        document.body.classList.add('shake-active');
+        setTimeout(() => {
+            document.body.classList.remove('shake-active');
+        }, 2000);
+    }
 
     // ===== SIGNATURE PAD LOGIC =====
     const canvas = document.getElementById('signature-pad');
@@ -731,27 +856,19 @@
     const saveBtn = document.getElementById('save');
     const saveAction = async (e) => {
         e.preventDefault();
-        if (signaturePad.isEmpty()) { alert("கையெழுத்து போடவும்! 🍼"); return; }
+        if (signaturePad.isEmpty()) { 
+            alert("கையெழுத்து போடவும்! 🍼"); 
+            return; 
+        }
         
         saveBtn.disabled = true;
         saveBtn.innerText = "Saving...";
 
-        document.body.classList.add('shake-active');
-
-        const duration = 3 * 1000;
-        const animationEnd = Date.now() + duration;
-        const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 10000 };
-
-        const randomInRange = (min, max) => Math.random() * (max - min) + min;
-
-        const interval = setInterval(function() {
-            const timeLeft = animationEnd - Date.now();
-            if (timeLeft <= 0) return clearInterval(interval);
-
-            const particleCount = 50 * (timeLeft / duration);
-            confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } });
-            confetti({ ...defaults, particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } });
-        }, 250);
+        // ===== TRIGGER ALL CELEBRATION EFFECTS =====
+        triggerShake();
+        createFireworks();
+        createConfetti();
+        createBalloons();
 
         const dataURL = signaturePad.toDataURL("image/jpeg", 0.5); 
         const name = document.getElementById('signer-name').value.trim();
@@ -769,14 +886,12 @@
                 cake.classList.add('show');
                 
                 setTimeout(() => {
-                    document.body.classList.remove('shake-active');
                     cake.classList.remove('show');
                     alert("வாழ்த்துக்கள் சேமிக்கப்பட்டது! ❤️");
                     location.reload();
                 }, 3000);
             }
         } catch (err) {
-            document.body.classList.remove('shake-active');
             alert("Error! மீண்டும் முயற்சி செய்யவும்.");
             saveBtn.disabled = false;
             saveBtn.innerText = "Save & Celebrate! 🎈";
