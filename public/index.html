@@ -33,26 +33,32 @@
         }
 
         html {
-            scroll-behavior: smooth;
-            overflow-y: scroll;
             height: 100%;
+    overflow-y: scroll;          /* scrollbar எப்போதும் ready ஆக இருக்கும் */
+    scroll-behavior: smooth;     /* smooth scroll – jumping குறையும் */
+    overscroll-behavior: none;   /* bounce / pull-to-refresh தடுக்கும் */
         }
 
         body {
             background: linear-gradient(135deg, var(--baby-pink) 0%, #f9a8d4 50%, var(--soft-peach) 100%);
-    background-attachment: fixed;
+    
+    /* மொபைலில் fixed பிரச்சனை அதிகம் → தற்காலிகமாக scroll ஆக்குங்கள் */
+    background-attachment: scroll;   /* fixed → scroll (மிக முக்கிய fix – iOS Safari & Chrome-இல் jump fix ஆகும்) */
+    /* background-attachment: fixed;  ← comment செய்யுங்கள் அல்லது scroll ஆக்குங்கள் */
+    
     font-family: 'Poppins', sans-serif;
     min-height: 100vh;
     margin: 0;
     padding: 0;
-    height: 100%;
     display: flex;
     flex-direction: column;
-    overflow-y: auto;                  /* ← manual scroll-க்கு இது சரியானது */
+    
     overflow-x: hidden;
+    overflow-y: scroll;              /* auto → scroll (manual scroll மட்டும்) */
     overscroll-behavior: none;
     -webkit-overflow-scrolling: touch;
     touch-action: manipulation;
+    
     color: var(--text-dark);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -1578,6 +1584,7 @@
 </script>
 </body>
 </html>
+
 
 
 
