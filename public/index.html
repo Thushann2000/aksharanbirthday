@@ -40,22 +40,22 @@
 
         body {
             background: linear-gradient(135deg, var(--baby-pink) 0%, #f9a8d4 50%, var(--soft-peach) 100%);
-            background-attachment: fixed;
-            font-family: 'Poppins', sans-serif;
-            min-height: 100vh;
-            margin: 0;
-            overflow-y: hidden;
-            padding: 0;
-            height: 100%;
-            touch-action: manipulation;
-            color: var(--text-dark);
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            display: flex;
-            flex-direction: column;
-            overscroll-behavior: none;
-            background-attachment: fixed;
-            -webkit-overflow-scrolling: touch;
+    background-attachment: fixed;
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;                  /* ← manual scroll-க்கு இது சரியானது */
+    overflow-x: hidden;
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: touch;
+    touch-action: manipulation;
+    color: var(--text-dark);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
         }
 
         main {
@@ -1578,6 +1578,7 @@
 </script>
 </body>
 </html>
+
 
 
 
