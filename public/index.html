@@ -33,8 +33,9 @@
         }
 
         html {
-            scroll-behavior: auto;
+            scroll-behavior: smooth;
             overflow-y: scroll;
+            height: 100%;
         }
 
         body {
@@ -43,13 +44,15 @@
             font-family: 'Poppins', sans-serif;
             min-height: 100vh;
             margin: 0;
-            overflow-x: hidden;
+            "overflow-y: hidden;
             touch-action: manipulation;
             color: var(--text-dark);
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             display: flex;
             flex-direction: column;
+            overscroll-behavior: none;
+            -webkit-overflow-scrolling: touch;
         }
 
         main {
@@ -1572,3 +1575,4 @@
 </script>
 </body>
 </html>
+
